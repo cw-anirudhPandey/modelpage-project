@@ -1,0 +1,140 @@
+.Rectangle {
+  width: 360px;
+  height: 56px;
+  padding: 3px 16px;
+  border-radius: 5px;
+  border-color: #999;
+  background-color: #ffffff;
+}
+
+.center-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-type {
+  display: left;
+}
+
+.emi-widget {
+  padding: 10px;
+  margin: 5px;
+}
+
+.rating-text {
+  margin: 5px;
+}
+
+.selection-popup {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 0 5px;
+  max-width: 50%;
+}
+
+.nav-icon {
+  cursor: pointer;
+  margin-left: 120px;
+}
+
+.link {
+  margin: 5px;
+}
+
+.link-title {
+  padding: 3px;
+  text-decoration: none;
+  color: grey;
+}
+
+.review {
+  padding-left: 7px;
+}
+
+.Rectangle-9 {
+  width: 159px;
+  height: 32px;
+  margin: 3px 0 3px 36px;
+  padding: 8px 20px;
+  border-radius: 3px;
+  border: solid 1px #00aaff;
+  background-color: #edf5f8;
+}
+
+.Shape {
+  width: 91px;
+  height: 20px;
+  margin: 0 0 0 5px;
+  background-color: #0d3a50;
+}
+
+.popup-box {
+  position: fixed;
+  background: #00000050;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  position: relative;
+  width: 70%;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(100vh - 85vh - 20px);
+  color: black;
+  background: #ffffffe7;
+  border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #999;
+  overflow: auto;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-align: center;
+  /* padding: 5px 0; */
+  /* border-radius: 6px; */
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+/* .tooltip:hover .tooltiptext {
+  visibility: visible;
+} */
+
+.arrow {
+  border: solid rgb(116, 113, 113);
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}

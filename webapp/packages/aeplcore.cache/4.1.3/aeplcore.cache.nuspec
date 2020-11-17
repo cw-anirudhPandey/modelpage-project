@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>AEPLCore.Cache</id>
+    <version>4.1.3</version>
+    <authors>AEPLCore.Cache</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Library for memcahed</description>
+    <releaseNotes>4.1.3
+-----------
+Fix issue with ExpireCacheAsync and ExpireCache, where null cache was not being cleared
+4.1.2
+-----------
+Catch serialization exception 
+4.1.1
+-----------
+Throw exception when Cache Server list is empty
+
+4.1.0
+-----------
+Added missing async functions and made them consistant with the non async version of the functions
+
+4.0.0
+-----------
+Add support for .net core 3.1
+Removed support for .net core 2.1/2.0
+
+3.3.0
+----------
+Added EODExpireWithOffset in CacheRefreshTime class =======
+3.2.0
+----------
+Bug Fix-
+Reverrted cache expiry methods from queue back to local.
+ExpireMultipleCache and ExpireMultipleCacheWithoutDelay still return bool
+Breaking change:
+Besides ExpireCacheAsync and ExpireCacheCriticalAsync(both for netcore), all async methods for expiry removed.
+----------
+3.0.0
+----------
+Breaking change: update grpc to 2.28 and google.protobuf to 3.12.3
+Also update proto files
+----------
+2.4.0
+----------
+Logging key whenever erros generated and throwing exception
+----------
+2.3.0
+----------
+Updated cache expiry methods for pushing key in Queue which expires cache via universal consumer.
+Note: Changes not done to ExpireCacheWithCriticalRead and ExpireCacheCriticalAsync. Every other method eventually passes through queue
+Async methods added for expiry.
+ExpireMultipleCache and ExpireMultipleCacheWithoutDelay now return bool
+----------
+2.2.0
+----------
+Added function to increment value in cache
+----------
+2.1.1.2
+----------
+Allow storing null values in cache (Started using CWMemcache)
+----------
+2.1.1.1
+----------
+In CacheManager created a function bool IsKeyExist(string key).
+----------
+2.1.0.1
+----------
+changed return type of ExpireCacheWithoutDelay from void to bool
+----------
+2.1.0.0
+----------
+Added get CacheServerList from s3
+Breaking changes
+For .net core add a new section to appsettings named KMSAccessKeys as follows
+"KMSAccessKeys": {
+		"KMSBucket": "cw-dev-config-keys",
+		"KMSAccessKey": "AKIA2SLNQ6B5SMP7L5EP",
+		"KMSAccessSecret": "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"
+	}
+Add key KMSCacheKeyName to existing AeplCoreDotNetCoreCache section.
+"Servers" in "enyimMemcached" will be used as a fallback in case KMS fails.
+
+For .net framework add keys KMSBucket, KMSAccessKey and KMSAccessSecret to web config,
+add key KMSCacheKeyName and servers in memcached section will be used as a fallback in case KMS fails.
+
+Added PackageReferences to AEPLCore.S3Operation, AEPLCore.Utils and Microsoft.Extensions.DependencyInjection</releaseNotes>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5.1">
+        <dependency id="AEPLCore.S3Operation" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="EnyimMemcached" version="2.16.0" exclude="Build,Analyzers" />
+        <dependency id="protobuf-net" version="2.3.7" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.5.2">
+        <dependency id="AEPLCore.S3Operation" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="EnyimMemcached" version="2.16.0" exclude="Build,Analyzers" />
+        <dependency id="protobuf-net" version="2.3.7" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="AEPLCore.S3Operation" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="CWMemcache" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="protobuf-net" version="2.3.7" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.5.1, .NETFramework4.5.2" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

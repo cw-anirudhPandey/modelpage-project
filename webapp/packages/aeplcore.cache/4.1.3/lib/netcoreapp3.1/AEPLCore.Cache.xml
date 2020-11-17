@@ -1,0 +1,340 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AEPLCore.Cache</name>
+    </assembly>
+    <members>
+        <member name="T:AEPLCore.Cache.CacheManager">
+            <summary>
+            Cache Manager for All
+            </summary>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.IsKeyExist(System.String)">
+            <summary>
+            Gets the object from cache. It checks whether the object is the critical string
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key"></param>
+            <returns>The object from cache if it is present.
+            Returns default(T) if object is not present of it is a critical string.
+            </returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCache``1(System.String,System.TimeSpan,System.Func{``0})">
+            <summary>
+            This fuction is an overloaded function that is added so that it is easy to integrate it with carwale.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key"></param>
+            <param name="cacheDuration"></param>
+            <param name="dbCallback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCache``1(System.String,System.Func{``0},System.TimeSpan)">
+            <summary>
+            Gets object from cache if possible or else calls the dbCallBack function provided and stores the object in cache
+            if object from cache matches critcalString then default(T) will be returned
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">key</param>
+            <param name="dbCallback">callback to be called in case the object is not present</param>
+            <param name="cacheDuration">Time for which object will be stored if not present</param>
+            <returns>object from cache if present or else from the DB</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCache``1(System.String,System.TimeSpan,System.Func{``0},System.Func{``0})">
+             <summary>
+            
+             </summary>
+             <typeparam name="T"></typeparam>
+             <param name="key"></param>
+             <param name="cacheDuration"></param>
+             <param name="dbCallback"></param>
+             <param name="dbCriticalCallback"></param>
+             <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCache``1(System.String,System.TimeSpan,System.Func{``0},System.Boolean@,System.Func{``0})">
+             <summary>
+            
+             </summary>
+             <typeparam name="T"></typeparam>
+             <param name="key"></param>
+             <param name="cacheDuration"></param>
+             <param name="dbCallback"></param>
+             <param name="isKeyFirstTimeCreated"></param>
+             <param name="dbCriticalCallback"></param>
+             <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.AddCriticalReadObj(System.String)">
+            <summary>
+            This method is used to add critical object to the key,
+            when someone tries to hit cache from the GetFromCache Method with critical callback
+            critical read is performed and key is set.
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireCache(System.String)">
+            <summary>
+            This method is used to add delay when someone tries to invalidate cache.
+            This is required as master slave sync in database is asynchronous.
+            if key exists in cache 
+            we'll store it for RefreshCacheDuration even if the value is null
+            since we allow storing null in cache for longer durations,
+            we should consider that while expiring keys
+            Also if the key was a criticalRead we'll store criticalString for RefreshCacheDuration
+            </summary>
+            <param name="key">cache key</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireWithDelay(System.String)">
+            <summary>
+            This method is used to add delay when someone tries to invalidate cache.
+            This is required as master slave sync in database is asynchronous.
+            if key exists in cache 
+            we'll store it for RefreshCacheDuration even if the value is null
+            since we allow storing null in cache for longer durations,
+            we should consider that while expiring keys
+            Also if the key was a criticalRead we'll store criticalString for RefreshCacheDuration
+            </summary>
+            <param name="key">cache key</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.IncrementValue(System.String,System.Func{System.Int32},System.TimeSpan)">
+            <summary>
+            This function increases the value of the cache key by one.
+            </summary>
+            <param name="key"> The key for which value needs to be increased</param>
+            <param name="dbcallback"> the callback function in case the key is not present </param>
+            <param name="cacheDuration"> Duration of the cache</param>
+            <returns>the new valuen after increment. defaults to 0 if there is any error</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.IncrementValue(System.String,System.Func{System.Int32},System.UInt64,System.TimeSpan)">
+            <summary>
+            This function increases the value of the cache key by the 'increaseby' parameter.
+            </summary>
+            <param name="key"> The key for which value needs to be increased</param>
+            <param name="dbcallback">the callback function in case the key is not present</param>
+            <param name="increaseBy">increase by value</param>
+            <param name="cacheDuration">Duration of the cache</param>
+            <returns>the new valuen after increment. defaults to 0 if there is any error</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCacheAsync``1(System.String)">
+            <summary>
+            if object from cache matches critcalString then default(T) will be returned
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCacheAsync``1(System.String,System.Func{System.Threading.Tasks.Task{``0}},System.TimeSpan,System.Func{System.Threading.Tasks.Task{``0}})">
+            <summary>
+                An Async Method to get an object from cache with Critical Read option.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key"></param>
+            <param name="cacheDuration"></param>
+            <param name="dbCallback"></param>
+            <param name="dbCriticalCallback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCacheAsync``1(System.String,System.TimeSpan,System.Func{System.Threading.Tasks.Task{``0}})">
+            <summary>
+            An async method to get object from cache
+            </summary>
+            <param name="key"></param>
+            <param name="cacheDuration"></param>
+            <param name="dbCallback"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.GetFromCacheAsync``1(System.String,System.Func{System.Threading.Tasks.Task{``0}},System.TimeSpan)">
+            <summary>
+                An Async Method to get an object from cache.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key"></param>
+            <param name="cacheDuration"></param>
+            <param name="dbCallback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.StoreToCacheAsync``1(System.String,``0)">
+            <summary>
+            Stores object to cache for time specified in RefreshCacheDuration field of AeplCoreDotNetCoreCache in
+            appsettings(for dotnetcore) or RefreshCacheDuration key in net framework
+            </summary>
+            <param name="key">Key to be stored</param>
+            <param name="t">Object to be cached</param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.StoreToCacheAsync``1(System.String,System.TimeSpan,``0)">
+            <summary>
+            Stores object to cache
+            </summary>
+            <param name="key"></param>
+            <param name="cacheDuration"></param>
+            <param name="t"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireCacheWithoutDelayAsync(System.String)">
+            <summary>
+            This function clears the object instantly
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireCacheWithCriticalReadAsync(System.String)">
+            <summary>
+            This function stores the old object for 5 mins and then clears it
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireMultipleCacheWithoutDelayAsync(System.Collections.Generic.List{System.String})">
+            <summary>
+            This function deletes multiple cache keys without delay
+            </summary>
+            <param name="keyList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.AddCriticalReadObjAsync(System.String)">
+            <summary>
+            This method is used to add critical object to the key,
+            when someone tries to hit cache from the GetFromCache Method with critical callback
+            critical read is performed and key is set when Async.
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.MultiGetFromCacheAsync``1(System.Collections.Generic.IDictionary{System.String,AEPLCore.Cache.MultiGetCallback{System.Threading.Tasks.Task{``0}}})">
+            <summary>
+            This method is a multiget function with db callbacks as input
+            </summary>
+            <param name="callBacks"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.IncrementValueAsync(System.String,System.Func{System.Threading.Tasks.Task{System.Int32}},System.TimeSpan)">
+            <summary>
+            This function increases the value of the cache key by one.
+            </summary>
+            <param name="key"> The key for which value needs to be increased</param>
+            <param name="dbcallback"> the callback function in case the key is not present </param>
+            <param name="cacheDuration"> Duration of the cache</param>
+            <returns>the new valuen after increment. defaults to 0 if there is any error</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.IncrementValueAsync(System.String,System.Func{System.Threading.Tasks.Task{System.Int32}},System.UInt64,System.TimeSpan)">
+            <summary>
+            This function increases the value of the cache key by the 'increaseby' parameter.
+            </summary>
+            <param name="key"> The key for which value needs to be increased</param>
+            <param name="dbcallback">the callback function in case the key is not present</param>
+            <param name="increaseBy">increase by value</param>
+            <param name="cacheDuration">Duration of the cache</param>
+            <returns>the new valuen after increment. defaults to 0 if there is any error</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireCacheAsync(System.String)">
+            <summary>
+            Expires a cache key with delay
+            if key exists in cache 
+            we'll store it for RefreshCacheDuration even if the value is null
+            since we allow storing null in cache for longer durations,
+            we should consider that while expiring keys
+            Also if the key was a criticalRead we'll store criticalString for RefreshCacheDuration
+            </summary>
+            <param name="key">cache key</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireMultipleCacheAsync(System.Collections.Generic.List{System.String})">
+            <summary>
+             Clears multiple cache keys with delays
+            </summary>
+            <param name="keyList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheManager.ExpireWithDelayAsync(System.String)">
+            <summary>
+            if key exists in cache 
+            we'll store it for RefreshCacheDuration even if the value is null
+            since we allow storing null in cache for longer durations,
+            we should consider that while expiring keys
+            Also if the key was a criticalRead we'll store criticalString for RefreshCacheDuration
+            </summary>
+            <param name="key">cache key</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheRefreshTime.GetInMinutes(System.String)">
+            <summary>
+            Get cache refresh count from sesource file based on passed key. 
+            If key not found condider default refresh time that is 30 min.
+            </summary>
+            <param name="key"></param>
+            <returns>int refresh time in minutes</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheRefreshTime.GetInDays(System.Int32)">
+            <summary>
+            Get cache refresh time based on passed number of days. 
+            </summary>
+            <param name="key"></param>
+            <returns>int refresh time in days</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheRefreshTime.DefaultRefreshTime">
+            <summary>
+            Default cache refresh time
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AEPLCore.Cache.CacheRefreshTime.EodExpireWithOffset(System.Int32)">
+            <summary>
+            This is used to expire cache at the End of day along with a random offset in seconds.
+            When many cache keys expire at the end of day load on database increases for that instant.
+            The random offset seconds will be used to distribute the load on database over the given time so we do not get a peak load on db
+            </summary>
+            <param name="seconds"></param>
+            <returns>Time duration for the cache key</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.ConfigManager.GetCacheClientOptions(Enyim.Caching.Configuration.MemcachedClientOptions)">
+            <summary>
+            Function to get MemcachedClientConfiguration for AddEnyimMemcached method.
+            Tries to get servers from s3. If not found then will use servers from the config provided in 
+            application.
+            </summary>
+            <returns>Enyim.Caching.Configuration.MemcachedClientOptions</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.ConfigManager.GetCacheServerList">
+            <summary>
+            Funtion to get serverlist stored on s3
+            </summary>
+            <returns>AEPLCore.Cache.ServerList</returns>
+        </member>
+        <member name="T:AEPLCore.Cache.MemcacheOptions">
+            <summary>
+            Class to hold enyimMemcached configuration
+            </summary>
+        </member>
+        <member name="M:AEPLCore.Cache.Server.ToString">
+            <summary>
+            Returns server as string
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:AEPLCore.Cache.ServerList.ToString">
+            <summary>
+            Returns List of servers as string
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="T:AEPLCore.Cache.Transcoder.ByteSegmentComparer">
+            <summary>
+            A comparer (for dictionary use) that can compare segments of buffers; the
+            intent being to avoid having to encode/decode strings
+            </summary>
+            <remarks>It is the responsibility of the consuming code not to mutate
+            the byte[] in a dictionary</remarks>
+        </member>
+        <member name="T:AEPLCore.Cache.Transcoder.NetTranscoder">
+            <summary>
+            Acts as a transcoder compatible with the "enyim" client, swapping
+            BinaryFormatter for protobuf-net's Serializer
+            </summary>
+        </member>
+    </members>
+</doc>
